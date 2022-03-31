@@ -9,11 +9,15 @@ form.addEventListener('submit', onFormSubmit);
 form.addEventListener('input', throttle(onFormInput, 500));
 
 // Перевіряємо наявність даних у сховищі, заповнюємо форму
-if (localStorage[storage]) {
-    const userLocalData = JSON.parse(localStorage[storage]);
-    form.email = userLocalData.email;
-    form.message = userLocalData.message || '';
-};
+function initForm() {
+  let persistedFilters = localStorage.getItem(storage);
+  if (persistedFilters) {
+    persistedFilters = JSON.parse(persistedFilters);
+    Object.entries(persistedFilters).forEach(([name, value]) => {
+      form.elements[name].value = value;
+    });
+  }
+}
 
 // Записуємо вхідні дані з input в сховище
 function onFormInput(event) {
