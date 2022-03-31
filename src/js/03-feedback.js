@@ -3,11 +3,6 @@ import throttle from 'lodash.throttle';
 const storage = 'feedback-form-state';
 const userData = {};
 
-const form = document.querySelector('.feedback-form');
-
-form.addEventListener('submit', onFormSubmit);
-form.addEventListener('input', throttle(onFormInput, 500));
-
 // Перевіряємо наявність даних у сховищі, заповнюємо форму
 function initForm() {
   let persistedFilters = localStorage.getItem(storage);
@@ -18,6 +13,13 @@ function initForm() {
     });
   }
 }
+
+const form = document.querySelector('.feedback-form');
+
+form.addEventListener('submit', onFormSubmit);
+form.addEventListener('input', throttle(onFormInput, 500));
+
+
 
 // Записуємо вхідні дані з input в сховище
 function onFormInput(event) {
